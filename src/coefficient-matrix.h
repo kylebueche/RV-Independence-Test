@@ -6,10 +6,9 @@
 #ifndef COEFFICIENT_MATRIX_H
 #define COEFFICIENT_MATRIX_H
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <iostream>
 #include <stdbool.h>
-
+#include <vector>
 
 /**************************************************
  * Coefficient Matrix for a polynomial with
@@ -28,8 +27,7 @@ class CoefficientMatrix
 {
     public:
         // n rows, n columns, initialized to 0
-        Matrix(int n);
-        ~Matrix();
+        CoefficientMatrix(int n);
         void printCoefficients();
         void printPolynomial();
 
@@ -51,19 +49,10 @@ class CoefficientMatrix
         void polynomialPlusPP(std::vector<int> P1, std::vector<int> P2);
         void polynomialMinusPP(std::vector<int> P1, std::vector<int> P2);
 
-        void polynomialPlusP0P1plusP2P3minusP4P5minusP6P7(std::vector<std::vector<int>> P0toP7);
-        void polynomialPlusP0P1P2P3minusP4P5minusP6P7(std::vector<std::vector<int>> P0toP7);
-
-        void setCoefficient(int i, int j, int value);
-        void addCoefficient(int i, int j, int value);
-        void subCoefficient(int i, int j, int value);
+        void polynomialF(std::vector<std::vector<int>> P0toP7);
 
     private:
         std::vector<std::vector<int>> values;
 };
-
-void permuteRandomly(std::vector<int> vec);
-int get_input_integer(char *statement);
-void exit_application();
 
 #endif

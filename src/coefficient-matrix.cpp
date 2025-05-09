@@ -4,17 +4,20 @@
  *
  **********************************************************/
 
+#include "coefficient-matrix.h"
+
 // n rows, n columns, initialized to 0
 CoefficientMatrix::CoefficientMatrix(int n)
 {
     values = std::vector<std::vector<int>>(n);
     for (int i = 0; i < n; i++)
     {
-        values[i] = std::vector<int>(n);
+        values.push_back(std::vector<int>(n));
         // Initialize row to 0
         for (int j = 0; j < n; j++)
         {
-            values[i][j] = 0;
+            values[i].push_back(0);
+            std::cout << values[i][j];
         }
     }
 }
@@ -22,14 +25,14 @@ CoefficientMatrix::CoefficientMatrix(int n)
 void CoefficientMatrix::printCoefficients()
 {
     int i, j;
-    for (i = 0; i < values.length; i++)
+    for (i = 0; i < values.size(); i++)
     {
-        printf("| ");
-        for (j = 0; j < values[i].length; j++)
+        std::cout << "| ";
+        for (j = 0; j < values[i].size(); j++)
         {
-            printf("%d ", values[i][j]);
+            std::cout << values[i][j] << " ";
         }
-        printf("|\n");
+        std::cout << "|\n";
     }
 }
 
@@ -37,15 +40,15 @@ void CoefficientMatrix::printPolynomial()
 {
     bool firstEntry = true;
     int i, j;
-    for (i = 0; i < values.length; i++)
+    for (i = 0; i < values.size(); i++)
     {
-        for (j = 0; j < values[i].length; j++)
+        for (j = 0; j < values[i].size(); j++)
         {
             if (firstEntry)
             {
                 if (values[i][j] != 0)
                 {
-                    printf("%dx%dx%d", values[i][j], i, j);
+                    std::cout << values[i][j] << "x" << i << "x" << j;
                     firstEntry = false;
                 }
             }
@@ -53,11 +56,11 @@ void CoefficientMatrix::printPolynomial()
             {
                 if (values[i][j] > 0)
                 {
-                    printf(" + %dx%dx%d", values[i][j], i, j);
+                    std::cout << " + " << values[i][j] << "x" << i << "x" << j;
                 }
                 else if (values[i][j] < 0)
                 {
-                    printf(" - %dx%dx%d", std::fabs(values[i][j]), i, j);
+                    std::cout << " - " << values[i][j] << "x" << i << "x" << j;
                 }
             }
         }
@@ -67,7 +70,7 @@ void CoefficientMatrix::printPolynomial()
 // Input vector must be of size n
 int CoefficientMatrix::evaluatePolynomial(std::vector<int> inputs)
 {
-    answer = 0;
+    int answer = 0;
     int i, j;
     for (i = 0; i < values.size(); i++)
     {
@@ -76,11 +79,12 @@ int CoefficientMatrix::evaluatePolynomial(std::vector<int> inputs)
             answer += values[i][j] * inputs[i] * inputs[j];
         }
     }
+    return answer;
 }
 
 void CoefficientMatrix::printEvaluatedPolynomial(std::vector<int> inputs)
 {
-    printf("%d", evaluatePolynomial);
+    std::cout << evaluatePolynomial(inputs);
 }
 
 /******************************************************************************
@@ -118,11 +122,10 @@ void CoefficientMatrix::polynomialMinusPP(std::vector<int> P1, std::vector<int> 
     }
 }
 
-void CoefficientMatrix::polynomialF(vector<int> P0, vector<int> P1, vector<int> P2, vector<int> P3,
-                                    vector<int> P4, vector<int> P5, vector<int> P6, vector<int> P7)
+void CoefficientMatrix::polynomialF(std::vector<std::vector<int>> P0toP7)
 {
-    polynomialPlusPP(P0, P1);
-    polynomialPlusPP(P2, P3);
-    polynomialMinusPP(P4, P5);
-    polynomialMinusPP(P6, P7);
+    polynomialPlusPP(P0toP7[0], P0toP7[1]);
+    polynomialPlusPP(P0toP7[2], P0toP7[3]);
+    polynomialMinusPP(P0toP7[4], P0toP7[5]);
+    polynomialMinusPP(P0toP7[6], P0toP7[7]);
 }
